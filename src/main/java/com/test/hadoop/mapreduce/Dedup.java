@@ -40,7 +40,9 @@ public class Dedup {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(Text.class);
         FileInputFormat.addInputPath(job, new Path("input"));
-        FileOutputFormat.setOutputPath(job, new Path("output"));
+        Path output = new Path("output");
+        output.getFileSystem(job.getConfiguration()).delete(output, true);
+        FileOutputFormat.setOutputPath(job, output);
         System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
 }

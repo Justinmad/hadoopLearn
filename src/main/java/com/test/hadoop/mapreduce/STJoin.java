@@ -71,7 +71,9 @@ public class STJoin {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(Text.class);
         FileInputFormat.addInputPath(job, new Path("input2"));
-        FileOutputFormat.setOutputPath(job, new Path("output"));
+        Path output = new Path("output");
+        output.getFileSystem(job.getConfiguration()).delete(output, true);
+        FileOutputFormat.setOutputPath(job, output);
         System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
 }
